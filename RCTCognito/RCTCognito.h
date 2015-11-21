@@ -8,6 +8,12 @@
 
 #import "RCTBridgeModule.h"
 #import "RCTLog.h"
+#import <AWSCore/AWSCore.h>
+#import <AWSCognito/AWSCognito.h>
+
 
 @interface RCTCognito : NSObject<RCTBridgeModule>
+
+- (AWSRegionType)getRegionFromString:(NSString *)region;
+
 @end

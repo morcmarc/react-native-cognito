@@ -12,31 +12,51 @@
 #import <AWSCore/AWSCore.h>
 #import <AWSCognito/AWSCognito.h>
 
+typedef AWSRegionType (^CaseBlock)();
+
 @implementation RCTCognito
 
 @synthesize bridge = _bridge;
 RCT_EXPORT_MODULE();
 
-RCT_EXPORT_METHOD(initCredentialsProvider:(NSString *) identityPoolId)
+- (AWSRegionType)getRegionFromString:(NSString *)region
 {
+    NSDictionary *regions = @{
+        @"eu-west-1":
+            ^{ return AWSRegionEUWest1; },
+        @"us-east-1":
+            ^{ return AWSRegionUSEast1; },
+        @"ap-northeast-1":
+            ^{ return AWSRegionAPNortheast1; },
+    };
+    return ((CaseBlock)regions[region])();
+}
+
+RCT_EXPORT_METHOD(initCredentialsProvider:(NSString *)identityPoolId token:(NSString *)token region:(NSString *)region)
+{
+    
+    
     AWSCognitoCredentialsProvider *credentialsProvider = [[AWSCognitoCredentialsProvider alloc]
-                                                          initWithRegionType:AWSRegionEUWest1
+                                                          initWithRegionType:[self getRegionFromString:region]
                                                           identityPoolId:identityPoolId];
     
-    AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSEast1 credentialsProvider:credentialsProvider];
+    credentialsProvider.logins = @{ @(AWSCognitoLoginProviderKeyFacebook): token };
+    
+    AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc]
+                                              initWithRegion:AWSRegionEUWest1
+                                              credentialsProvider:credentialsProvider];
     
     [AWSServiceManager defaultServiceManager].defaultServiceConfiguration = configuration;
 }
 
-RCT_EXPORT_METHOD(syncData:(NSString*) key:(NSString*) value)
+RCT_EXPORT_METHOD(syncData:(NSString *)datasetName key:(NSString *)key value:(NSString *)value)
 {
     AWSCognito *syncClient = [AWSCognito defaultCognito];
-    AWSCognitoDataset *dataset = [syncClient openOrCreateDataset:@"testDataset"];
+    AWSCognitoDataset *dataset = [syncClient openOrCreateDataset:datasetName];
     
     [dataset setString:value forKey:key];
     
     [[dataset synchronize] continueWithBlock:^id(AWSTask *task) {
-        NSLog(@"callback %@", task);
         return nil;
     }];
 }
