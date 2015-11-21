@@ -1,0 +1,26 @@
+{
+  "name": "react-native-cognito",
+  "version": "1.0.0",
+  "description": "AWS Cognito-based authentication module for React Native.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/morcmarc/react-native-cognito.git"
+  },
+  "keywords": [
+    "react-native",
+    "react",
+    "react-component",
+    "ios",
+    "android"
+  ],
+  "author": "Marcell Jusztin <hello@morcmarc.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/morcmarc/react-native-cognito/issues"
+  },
+  "homepage": "https://github.com/morcmarc/react-native-cognito#readme"
+}

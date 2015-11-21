@@ -1,0 +1,267 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DD62DB9F1C00BCB0007F4D2A /* RCTCognito.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = DD62DB9E1C00BCB0007F4D2A /* RCTCognito.h */; };
+		DD62DBA11C00BCB0007F4D2A /* RCTCognito.m in Sources */ = {isa = PBXBuildFile; fileRef = DD62DBA01C00BCB0007F4D2A /* RCTCognito.m */; };
+		DD62DBB51C00C319007F4D2A /* AWSCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD62DBB01C00C319007F4D2A /* AWSCore.framework */; };
+		DD62DBB61C00C319007F4D2A /* AWSCognito.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD62DBB31C00C319007F4D2A /* AWSCognito.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		DD62DB991C00BCB0007F4D2A /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+				DD62DB9F1C00BCB0007F4D2A /* RCTCognito.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		DD62DB9B1C00BCB0007F4D2A /* libRCTCognito.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRCTCognito.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		DD62DB9E1C00BCB0007F4D2A /* RCTCognito.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTCognito.h; sourceTree = "<group>"; };
+		DD62DBA01C00BCB0007F4D2A /* RCTCognito.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTCognito.m; sourceTree = "<group>"; };
+		DD62DBAF1C00C01B007F4D2A /* RCTCognito.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = RCTCognito.podspec; sourceTree = "<group>"; };
+		DD62DBB01C00C319007F4D2A /* AWSCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSCore.framework; path = "../../aws-ios-sdk-2/frameworks/AWSCore.framework"; sourceTree = "<group>"; };
+		DD62DBB31C00C319007F4D2A /* AWSCognito.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSCognito.framework; path = "../../aws-ios-sdk-2/frameworks/extras/AWSCognito.framework"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DD62DB981C00BCB0007F4D2A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DD62DBB61C00C319007F4D2A /* AWSCognito.framework in Frameworks */,
+				DD62DBB51C00C319007F4D2A /* AWSCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DD62DB921C00BCB0007F4D2A = {
+			isa = PBXGroup;
+			children = (
+				DD62DBB31C00C319007F4D2A /* AWSCognito.framework */,
+				DD62DBB01C00C319007F4D2A /* AWSCore.framework */,
+				DD62DBAF1C00C01B007F4D2A /* RCTCognito.podspec */,
+				DD62DB9D1C00BCB0007F4D2A /* RCTCognito */,
+				DD62DB9C1C00BCB0007F4D2A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DD62DB9C1C00BCB0007F4D2A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DD62DB9B1C00BCB0007F4D2A /* libRCTCognito.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DD62DB9D1C00BCB0007F4D2A /* RCTCognito */ = {
+			isa = PBXGroup;
+			children = (
+				DD62DB9E1C00BCB0007F4D2A /* RCTCognito.h */,
+				DD62DBA01C00BCB0007F4D2A /* RCTCognito.m */,
+			);
+			path = RCTCognito;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DD62DB9A1C00BCB0007F4D2A /* RCTCognito */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DD62DBA41C00BCB0007F4D2A /* Build configuration list for PBXNativeTarget "RCTCognito" */;
+			buildPhases = (
+				DD62DB971C00BCB0007F4D2A /* Sources */,
+				DD62DB981C00BCB0007F4D2A /* Frameworks */,
+				DD62DB991C00BCB0007F4D2A /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RCTCognito;
+			productName = RCTCognito;
+			productReference = DD62DB9B1C00BCB0007F4D2A /* libRCTCognito.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DD62DB931C00BCB0007F4D2A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0710;
+				ORGANIZATIONNAME = "Marcell Jusztin";
+				TargetAttributes = {
+					DD62DB9A1C00BCB0007F4D2A = {
+						CreatedOnToolsVersion = 7.1.1;
+					};
+				};
+			};
+			buildConfigurationList = DD62DB961C00BCB0007F4D2A /* Build configuration list for PBXProject "RCTCognito" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = DD62DB921C00BCB0007F4D2A;
+			productRefGroup = DD62DB9C1C00BCB0007F4D2A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DD62DB9A1C00BCB0007F4D2A /* RCTCognito */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DD62DB971C00BCB0007F4D2A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DD62DBA11C00BCB0007F4D2A /* RCTCognito.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		DD62DBA21C00BCB0007F4D2A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		DD62DBA31C00BCB0007F4D2A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DD62DBA51C00BCB0007F4D2A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../aws-ios-sdk-2/frameworks/**";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../react-native/React/**";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		DD62DBA61C00BCB0007F4D2A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../aws-ios-sdk-2/frameworks/**";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../react-native/React";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DD62DB961C00BCB0007F4D2A /* Build configuration list for PBXProject "RCTCognito" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DD62DBA21C00BCB0007F4D2A /* Debug */,
+				DD62DBA31C00BCB0007F4D2A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DD62DBA41C00BCB0007F4D2A /* Build configuration list for PBXNativeTarget "RCTCognito" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DD62DBA51C00BCB0007F4D2A /* Debug */,
+				DD62DBA61C00BCB0007F4D2A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DD62DB931C00BCB0007F4D2A /* Project object */;
+}
