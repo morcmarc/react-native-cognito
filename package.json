@@ -1,12 +1,13 @@
 {
   "name": "react-native-cognito",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "AWS Cognito-based authentication module for React Native.",
   "main": "index.js",
   "scripts": {
     "test": "jest",
     "start": ""
   },
+  "private": false,
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/morcmarc/react-native-cognito.git"
