@@ -7,6 +7,7 @@
 //
 
 #import "RCTBridgeModule.h"
+#import "RCTLog.h"
 
-@interface RCTCognito : NSObject
+@interface RCTCognito : NSObject<RCTBridgeModule>
 @end

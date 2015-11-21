@@ -4,7 +4,8 @@
   "description": "AWS Cognito-based authentication module for React Native.",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": ""
   },
   "repository": {
     "type": "git",
@@ -22,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/morcmarc/react-native-cognito/issues"
   },
-  "homepage": "https://github.com/morcmarc/react-native-cognito#readme"
+  "homepage": "https://github.com/morcmarc/react-native-cognito#readme",
+  "devDependencies": {
+    "react-native": "^0.14.2"
+  }
 }

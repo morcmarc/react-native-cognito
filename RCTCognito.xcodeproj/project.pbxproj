@@ -30,7 +30,6 @@
 		DD62DB9B1C00BCB0007F4D2A /* libRCTCognito.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRCTCognito.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD62DB9E1C00BCB0007F4D2A /* RCTCognito.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTCognito.h; sourceTree = "<group>"; };
 		DD62DBA01C00BCB0007F4D2A /* RCTCognito.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTCognito.m; sourceTree = "<group>"; };
-		DD62DBAF1C00C01B007F4D2A /* RCTCognito.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = RCTCognito.podspec; sourceTree = "<group>"; };
 		DD62DBB01C00C319007F4D2A /* AWSCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSCore.framework; path = "../../aws-ios-sdk-2/frameworks/AWSCore.framework"; sourceTree = "<group>"; };
 		DD62DBB31C00C319007F4D2A /* AWSCognito.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSCognito.framework; path = "../../aws-ios-sdk-2/frameworks/extras/AWSCognito.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -53,7 +52,6 @@
 			children = (
 				DD62DBB31C00C319007F4D2A /* AWSCognito.framework */,
 				DD62DBB01C00C319007F4D2A /* AWSCore.framework */,
-				DD62DBAF1C00C01B007F4D2A /* RCTCognito.podspec */,
 				DD62DB9D1C00BCB0007F4D2A /* RCTCognito */,
 				DD62DB9C1C00BCB0007F4D2A /* Products */,
 			);
