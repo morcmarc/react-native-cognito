@@ -6,17 +6,17 @@
 
 **Features currently supported:**
 
-[x] dataset:synchronize
+* [x] dataset:synchronize
 
 **Roadmap:**
 
-[ ] dataset:subscribe
-[ ] dataset:unsubscrib
-[ ] proper callbacks + events
-[ ] promises
-[ ] twitter auth support
-[ ] google auth support
-[ ] custom login support
+* [ ] dataset:subscribe
+* [ ] dataset:unsubscrib
+* [ ] proper callbacks + events
+* [ ] promises
+* [ ] twitter auth support
+* [ ] google auth support
+* [ ] custom login support
 
 ## Supported Identity Providers
 
