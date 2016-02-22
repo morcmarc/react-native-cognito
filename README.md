@@ -19,6 +19,10 @@ In development:
 
 `react-native-cognito` does not handle authentication with identity providers such as Facebook. You have to use [react-native-facebook-login](https://github.com/magus/react-native-facebook-login) or similar to get a valid access token to use with `react-native-cognito`.
 
+### AWS Mobile SDK
+
+Make sure you install the AWS Mobile SDK. [https://aws.amazon.com/mobile/sdk/](http://docs.aws.amazon.com/mobile/sdkforios/developerguide/setup.html).
+
 ## Example Usage
 
 ```es6
@@ -40,8 +44,11 @@ class Demo extends React.Component {
             this.state.credentials.token, // <- Facebook access token
             region);
 
-        // Sync some data up to the cloud.
-        Cognito.syncData('testDataset', 'hello', 'world');
+        // Sync data
+        Cognito.syncData('testDataset', 'hello', 'world', (err) => {
+            // callback
+            // handle errors etc
+        });
     }
 }
 ```
@@ -55,6 +62,8 @@ $ npm install --save react-native-cognito
 ```
 
 Add RCTCognito.xcodeproj to Libraries and add libRCTCognito.a to Link Binary With Libraries under Build Phases. More info and screenshots about how to do this is available in the [React Native documentation](https://facebook.github.io/react-native/docs/linking-libraries-ios.html#content).
+
+**Next, select RCTCognito.xcodeproj and add your AWS SDK path to Framework Search Paths under Build Settings.**
 
 ## Install -- Android
 
