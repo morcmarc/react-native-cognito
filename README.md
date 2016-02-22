@@ -4,6 +4,20 @@
 
 `react-native-cognito` provides a [React Native](http://facebook.github.io/react-native/) module for integrating with [AWS Cognito](https://aws.amazon.com/cognito/).
 
+**Features currently supported:**
+
+[x] dataset:synchronize
+
+**Roadmap:**
+
+[ ] dataset:subscribe
+[ ] dataset:unsubscrib
+[ ] proper callbacks + events
+[ ] promises
+[ ] twitter auth support
+[ ] google auth support
+[ ] custom login support
+
 ## Supported Identity Providers
 
 Currently the following identity providers are supported:

@@ -34,11 +34,9 @@ RCT_EXPORT_MODULE();
   return ((CaseBlock)regions[region])();
 }
 
-RCT_EXPORT_METHOD(initCredentialsProvider
-                  : (NSString *)identityPoolId token
-                  : (NSString *)token region
+RCT_EXPORT_METHOD(initCredentialsProvider: (NSString *)identityPoolId
+                  : (NSString *)token
                   : (NSString *)region) {
-
   AWSCognitoCredentialsProvider *credentialsProvider =
       [[AWSCognitoCredentialsProvider alloc]
           initWithRegionType:[self getRegionFromString:region]
@@ -56,16 +54,37 @@ RCT_EXPORT_METHOD(initCredentialsProvider
       configuration;
 }
 
-RCT_EXPORT_METHOD(syncData
-                  : (NSString *)datasetName key
-                  : (NSString *)key value
-                  : (NSString *)value) {
+RCT_EXPORT_METHOD(syncData: (NSString *)datasetName
+                  : (NSString *)key
+                  : (NSString *)value
+                  : (RCTResponseSenderBlock)callback) {
   AWSCognito *syncClient = [AWSCognito defaultCognito];
   AWSCognitoDataset *dataset = [syncClient openOrCreateDataset:datasetName];
 
   [dataset setString:value forKey:key];
-
   [[dataset synchronize] continueWithBlock:^id(AWSTask *task) {
+    if (task.error) {
+      callback(@[ task.error ]);
+    } else {
+      callback(@[ [NSNull null] ]);
+    }
+    return nil;
+  }];
+}
+
+RCT_EXPORT_METHOD(subscribe: (NSString *)datasetName
+                  : (RCTResponseSenderBlock)callback) {
+  AWSCognito *syncClient = [AWSCognito defaultCognito];
+  AWSCognitoDataset *dataset = [syncClient openOrCreateDataset:datasetName];
+
+  [[dataset subscribe] continueWithBlock:^id(AWSTask *task) {
+    if (task.error) {
+      NSLog(@"Unable to subscribe to dataset");
+      callback(@[ [task.error localizedDescription] ]);
+    } else {
+      NSLog(@"Subscribed to dataset");
+      callback(@[ [NSNull null] ]);
+    }
     return nil;
   }];
 }
