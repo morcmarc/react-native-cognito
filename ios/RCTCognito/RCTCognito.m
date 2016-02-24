@@ -64,7 +64,7 @@ RCT_EXPORT_METHOD(syncData: (NSString *)datasetName
   [dataset setString:value forKey:key];
   [[dataset synchronize] continueWithBlock:^id(AWSTask *task) {
     if (task.error) {
-      callback(@[ task.error ]);
+      callback(@[ @{@"code":[NSNumber numberWithLong:task.error.code], @"domain":task.error.domain, @"userInfo":task.error.userInfo, @"localizedDescription":task.error.localizedDescription} ]);
     } else {
       callback(@[ [NSNull null] ]);
     }
