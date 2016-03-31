@@ -56,7 +56,7 @@ RCT_EXPORT_METHOD((NSString) initCredentialsProvider: (NSString *)identityPoolId
       configuration;
 
   NSString *cognitoId = credentialsProvider.identityId;
-  callback(cognitoId);
+  callback(@[ @{@"cognitoId":cognitoId} ]);
 
 }
 
