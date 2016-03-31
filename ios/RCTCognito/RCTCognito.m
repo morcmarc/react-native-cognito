@@ -36,7 +36,9 @@ RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD((NSString) initCredentialsProvider: (NSString *)identityPoolId
                   : (NSString *)token
-                  : (NSString *)region) {
+                  : (NSString *)region
+                  : (RCTResponseSenderBlock)callback
+                ) {
   AWSCognitoCredentialsProvider *credentialsProvider =
       [[AWSCognitoCredentialsProvider alloc]
           initWithRegionType:[self getRegionFromString:region]
@@ -53,9 +55,12 @@ RCT_EXPORT_METHOD((NSString) initCredentialsProvider: (NSString *)identityPoolId
   [AWSServiceManager defaultServiceManager].defaultServiceConfiguration =
       configuration;
 
-  return credentialsProvider.identityId;
+  NSString *cognitoId = credentialsProvider.identityId;
+  callback(cognitoId);
 
 }
+
+
 
 RCT_EXPORT_METHOD(syncData: (NSString *)datasetName
                   : (NSString *)key
