@@ -1,4 +1,4 @@
-# React Native : AWS Cognito Module 
+# React Native : AWS Cognito Module
 
 **Work in progress!**
 
@@ -57,6 +57,13 @@ class Demo extends React.Component {
             identityPoolId,
             this.state.credentials.token, // <- Facebook access token
             region);
+
+        // Get Cognito Id (Returns Promise)
+        Cognito.getCognitoId().then(cognitoId => {
+          alert(cognitoId);
+        });
+
+        //You can also use await or async on getCognitoId();    
 
         // Sync data
         Cognito.syncData('testDataset', 'hello', 'world', (err) => {
@@ -117,12 +124,12 @@ import com.morcmarc.rctcognito.ReactCognitoPackage;
 
 public class MainActivity extends Activity implements DefaultHardwareBackBtnHandler {
     ...
-    
+
     // declare package
     private ReactCognitoPackage mReactCognitoPackage;
 
     ...
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
