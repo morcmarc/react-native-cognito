@@ -34,7 +34,7 @@ RCT_EXPORT_MODULE();
   return ((CaseBlock)regions[region])();
 }
 
-RCT_EXPORT_METHOD(initCredentialsProvider: (NSString *)identityPoolId
+RCT_EXPORT_METHOD((NSString) initCredentialsProvider: (NSString *)identityPoolId
                   : (NSString *)token
                   : (NSString *)region) {
   AWSCognitoCredentialsProvider *credentialsProvider =
@@ -52,6 +52,9 @@ RCT_EXPORT_METHOD(initCredentialsProvider: (NSString *)identityPoolId
 
   [AWSServiceManager defaultServiceManager].defaultServiceConfiguration =
       configuration;
+
+  return credentialsProvider.identityId;
+
 }
 
 RCT_EXPORT_METHOD(syncData: (NSString *)datasetName
