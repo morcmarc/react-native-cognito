@@ -7,6 +7,7 @@
 //
 
 #import "RCTBridge.h"
+#import "RCTConvert.h"
 #import "RCTCognito.h"
 
 #import <AWSCognito/AWSCognito.h>
@@ -20,81 +21,98 @@ typedef AWSRegionType (^CaseBlock)();
 RCT_EXPORT_MODULE();
 
 - (AWSRegionType)getRegionFromString:(NSString *)region {
-  NSDictionary *regions = @{
-    @"eu-west-1" : ^{
-      return AWSRegionEUWest1;
-    },
-    @"us-east-1" : ^{
-      return AWSRegionUSEast1;
-    },
-    @"ap-northeast-1" : ^{
-      return AWSRegionAPNortheast1;
-    },
-  };
-  return ((CaseBlock)regions[region])();
+    NSDictionary *regions = @{
+                              @"eu-west-1" : ^{
+                                  return AWSRegionEUWest1;
+                              },
+                              @"us-east-1" : ^{
+                                  return AWSRegionUSEast1;
+                              },
+                              @"ap-northeast-1" : ^{
+                                  return AWSRegionAPNortheast1;
+                              },
+                              };
+    return ((CaseBlock)regions[region])();
 }
-
+AWSCognitoCredentialsProvider *credentialsProvider;
 RCT_EXPORT_METHOD(initCredentialsProvider: (NSString *)identityPoolId
                   : (NSString *)token
                   : (NSString *)region
-                  : (RCTResponseSenderBlock)callback
-                ) {
-  AWSCognitoCredentialsProvider *credentialsProvider =
-      [[AWSCognitoCredentialsProvider alloc]
-          initWithRegionType:[self getRegionFromString:region]
-              identityPoolId:identityPoolId];
+                  ) {
+    credentialsProvider =
+    [[AWSCognitoCredentialsProvider alloc]
+     initWithRegionType:[self getRegionFromString:region]
+     identityPoolId:identityPoolId];
 
-  credentialsProvider.logins = @{
-    @(AWSCognitoLoginProviderKeyFacebook) : token
-  };
+    credentialsProvider.logins = @{
+                                   @(AWSCognitoLoginProviderKeyFacebook) : token
+                                   };
 
-  AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc]
-           initWithRegion:[self getRegionFromString:region]
-      credentialsProvider:credentialsProvider];
+    AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc]
+                                              initWithRegion:[self getRegionFromString:region]
+                                              credentialsProvider:credentialsProvider];
 
-  [AWSServiceManager defaultServiceManager].defaultServiceConfiguration =
-      configuration;
-
-  NSString *cognitoId = credentialsProvider.identityId;
-  callback(@[ @{@"cognitoId":cognitoId} ]);
+    [AWSServiceManager defaultServiceManager].defaultServiceConfiguration =
+    configuration;
 
 }
 
+
+RCT_REMAP_METHOD(getCognitoId,
+                 resolver:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject)
+{
+    if(credentialsProvider.identityId == Nil){
+
+    [[credentialsProvider getIdentityId] continueWithBlock:^id(AWSTask *task) {
+        if (task.error) {
+            reject(@"Error", @"Failed to get CognitoId", task.error);
+        }
+        else {
+            resolve(task.result);
+        }
+        return nil;
+    }];
+    }
+    else{
+        resolve(credentialsProvider.identityId);
+    }
+}
 
 
 RCT_EXPORT_METHOD(syncData: (NSString *)datasetName
                   : (NSString *)key
                   : (NSString *)value
                   : (RCTResponseSenderBlock)callback) {
-  AWSCognito *syncClient = [AWSCognito defaultCognito];
-  AWSCognitoDataset *dataset = [syncClient openOrCreateDataset:datasetName];
+    AWSCognito *syncClient = [AWSCognito defaultCognito];
+    AWSCognitoDataset *dataset = [syncClient openOrCreateDataset:datasetName];
 
-  [dataset setString:value forKey:key];
-  [[dataset synchronize] continueWithBlock:^id(AWSTask *task) {
-    if (task.error) {
-      callback(@[ @{@"code":[NSNumber numberWithLong:task.error.code], @"domain":task.error.domain, @"userInfo":task.error.userInfo, @"localizedDescription":task.error.localizedDescription} ]);
-    } else {
-      callback(@[ [NSNull null] ]);
-    }
-    return nil;
-  }];
+    [dataset setString:value forKey:key];
+    [[dataset synchronize] continueWithBlock:^id(AWSTask *task) {
+        if (task.error) {
+            callback(@[ @{@"code":[NSNumber numberWithLong:task.error.code], @"domain":task.error.domain, @"userInfo":task.error.userInfo, @"localizedDescription":task.error.localizedDescription} ]);
+        } else {
+            callback(@[ [NSNull null] ]);
+        }
+        return nil;
+    }];
 }
 
 RCT_EXPORT_METHOD(subscribe: (NSString *)datasetName
                   : (RCTResponseSenderBlock)callback) {
-  AWSCognito *syncClient = [AWSCognito defaultCognito];
-  AWSCognitoDataset *dataset = [syncClient openOrCreateDataset:datasetName];
+    AWSCognito *syncClient = [AWSCognito defaultCognito];
+    AWSCognitoDataset *dataset = [syncClient openOrCreateDataset:datasetName];
 
-  [[dataset subscribe] continueWithBlock:^id(AWSTask *task) {
-    if (task.error) {
-      NSLog(@"Unable to subscribe to dataset");
-      callback(@[ [task.error localizedDescription] ]);
-    } else {
-      NSLog(@"Subscribed to dataset");
-      callback(@[ [NSNull null] ]);
-    }
-    return nil;
-  }];
+    [[dataset subscribe] continueWithBlock:^id(AWSTask *task) {
+        if (task.error) {
+            NSLog(@"Unable to subscribe to dataset");
+            callback(@[ [task.error localizedDescription] ]);
+        } else {
+            NSLog(@"Subscribed to dataset");
+            callback(@[ [NSNull null] ]);
+        }
+        return nil;
+    }];
 }
 
 @end
