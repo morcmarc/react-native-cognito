@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "react-native-cognito"
-  s.version          = "1.0.1"
+  s.version          = "1.3.0alpha"
   s.summary          = "React Native for Cognito"
   s.requires_arc = true
   s.author       = { 'Marcell Jusztin, Sunny Gurnani' => 'hello@morcmarc.com,gurnani.sunny@gmail.com' }
