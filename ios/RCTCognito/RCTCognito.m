@@ -34,7 +34,7 @@ RCT_EXPORT_MODULE();
   return ((CaseBlock)regions[region])();
 }
 
-RCT_EXPORT_METHOD((NSString) initCredentialsProvider: (NSString *)identityPoolId
+RCT_EXPORT_METHOD(initCredentialsProvider: (NSString *)identityPoolId
                   : (NSString *)token
                   : (NSString *)region
                   : (RCTResponseSenderBlock)callback
