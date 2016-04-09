@@ -39,14 +39,21 @@ RCT_EXPORT_METHOD(initCredentialsProvider: (NSString *)identityPoolId
                   : (NSString *)token
                   : (NSString *)region
                   ) {
+
     credentialsProvider =
     [[AWSCognitoCredentialsProvider alloc]
      initWithRegionType:[self getRegionFromString:region]
      identityPoolId:identityPoolId];
 
-    credentialsProvider.logins = @{
-                                   @(AWSCognitoLoginProviderKeyFacebook) : token
-                                   };
+    if([token length] != 0) {
+
+        [credentialsProvider clearCredentials];
+        [credentialsProvider clearKeychain];
+
+        credentialsProvider.logins = @{
+                                       @(AWSCognitoLoginProviderKeyFacebook) : token
+                                       };
+    }
 
     AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc]
                                               initWithRegion:[self getRegionFromString:region]
@@ -56,7 +63,6 @@ RCT_EXPORT_METHOD(initCredentialsProvider: (NSString *)identityPoolId
     configuration;
 
 }
-
 
 
 RCT_REMAP_METHOD(getCognitoCredentials,
@@ -78,7 +84,6 @@ RCT_REMAP_METHOD(getCognitoCredentials,
     }];
 
 }
-
 
 
 RCT_EXPORT_METHOD(syncData: (NSString *)datasetName
