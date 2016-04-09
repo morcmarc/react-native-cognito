@@ -58,26 +58,27 @@ RCT_EXPORT_METHOD(initCredentialsProvider: (NSString *)identityPoolId
 }
 
 
-RCT_REMAP_METHOD(getCognitoId,
+
+RCT_REMAP_METHOD(getCognitoCredentials,
                  resolver:(RCTPromiseResolveBlock)resolve
                  rejecter:(RCTPromiseRejectBlock)reject)
 {
-    if(credentialsProvider.identityId == Nil){
 
-    [[credentialsProvider getIdentityId] continueWithBlock:^id(AWSTask *task) {
+    [[credentialsProvider refresh] continueWithBlock:^id(AWSTask *task) {
+
         if (task.error) {
-            reject(@"Error", @"Failed to get CognitoId", task.error);
+            NSLog(@"Error in Cognito credentialsprovider.refresh", task.error);
+            reject(@"Error", @"Failed to get Cognito", task.error);
         }
         else {
-            resolve(task.result);
+            NSInteger timeStamp = round(credentialsProvider.expiration.timeIntervalSince1970);
+            resolve( @{@"accessKey": credentialsProvider.accessKey, @"secretKey": credentialsProvider.secretKey, @"sessionKey":credentialsProvider.sessionKey, @"expiration":[NSNumber numberWithInt:timeStamp], @"identityId":credentialsProvider.identityId });
         }
         return nil;
     }];
-    }
-    else{
-        resolve(credentialsProvider.identityId);
-    }
+
 }
+
 
 
 RCT_EXPORT_METHOD(syncData: (NSString *)datasetName
