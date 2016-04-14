@@ -1,13 +1,13 @@
 
 Pod::Spec.new do |s|
   s.name             = "react-native-cognito"
-  s.version          = "1.3.0alpha"
+  s.version          = "1.5.0"
   s.summary          = "React Native for Cognito"
   s.requires_arc = true
   s.author       = { 'Marcell Jusztin, Sunny Gurnani' => 'hello@morcmarc.com,gurnani.sunny@gmail.com' }
   s.license      = 'MIT'
-  s.homepage     = 'https://github.com/morcmarc/react-native-cognito'
-  s.source       = { :git => "https://github.com/morcmarc/react-native-cognito.git" }
+  s.homepage     = 'https://github.com/SunnyGurnani/react-native-cognito'
+  s.source       = { :git => "https://github.com/SunnyGurnani/react-native-cognito.git" }
   s.platform     = :ios, "7.0"
   s.dependency 'React'
 
