@@ -13,6 +13,7 @@
 #import <AWSCognito/AWSCognito.h>
 #import <AWSCore/AWSCore.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <AWSS3/AWSS3.h>
 
 typedef AWSRegionType (^CaseBlock)();
 
@@ -62,6 +63,52 @@ RCT_EXPORT_MODULE();
     configuration;
 
     return credentialsProvider;
+}
+
+RCT_REMAP_METHOD(UploadFileToS3,
+                      : (NSString*) fileUrl
+                      : (NSString*) bucket
+                      : (NSString*) key
+                 resolver:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject)
+
+{
+    AWSS3TransferManagerUploadRequest *uploadRequest = [AWSS3TransferManagerUploadRequest new];
+    uploadRequest.bucket = bucket;
+    uploadRequest.key = key;
+     NSURL *url = [NSURL URLWithString:fileUrl];
+    uploadRequest.body = url;
+    AWSS3TransferManager *transferManager = [AWSS3TransferManager defaultS3TransferManager];
+    [[transferManager upload:uploadRequest] continueWithBlock:^id
+                                                       (AWSTask *task) {
+                                                           if (task.error) {
+                                                               if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]) {
+                                                                   switch (task.error.code) {
+                                                                       case AWSS3TransferManagerErrorCancelled:
+                                                                       case AWSS3TransferManagerErrorPaused:
+                                                                           break;
+
+                                                                       default:
+                                                                           NSLog(@"Error: %@", task.error);
+                                                                           reject(@"Error", @"Failed upload file", task.error);
+                                                                           break;
+                                                                   }
+                                                               } else {
+                                                                   // Unknown error.
+                                                                   NSLog(@"Error: %@", task.error);
+                                                                   reject(@"Error", @"Failed upload file", task.error);
+                                                               }
+                                                           }
+
+                                                           if (task.result) {
+                                                               AWSS3TransferManagerUploadOutput *uploadOutput = task.result;
+                                                               // The file uploaded successfully.
+                                                               NSLog(@"Successfully uploaded file to S3", task.result);
+                                                               resolve(@ {@"success": @"done"});
+                                                           }
+                                                           return nil;
+                                                       }];
+
 }
 
 
