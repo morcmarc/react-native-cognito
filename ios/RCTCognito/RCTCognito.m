@@ -12,6 +12,7 @@
 
 #import <AWSCognito/AWSCognito.h>
 #import <AWSCore/AWSCore.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
 
 typedef AWSRegionType (^CaseBlock)();
 
@@ -34,24 +35,22 @@ RCT_EXPORT_MODULE();
                               };
     return ((CaseBlock)regions[region])();
 }
-AWSCognitoCredentialsProvider *credentialsProvider;
-RCT_EXPORT_METHOD(initCredentialsProvider: (NSString *)identityPoolId
-                  : (NSString *)token
-                  : (NSString *)region
-                  ) {
 
-    credentialsProvider =
+ NSString *identityPoolId = @"";
+ NSString *region = @"";
+
+
+- (AWSCognitoCredentialsProvider *) StartCognito: (NSString *)token {
+    AWSCognitoCredentialsProvider *credentialsProvider =
     [[AWSCognitoCredentialsProvider alloc]
      initWithRegionType:[self getRegionFromString:region]
      identityPoolId:identityPoolId];
 
+
     if([token length] != 0) {
 
-        [credentialsProvider clearCredentials];
-        [credentialsProvider clearKeychain];
-
         credentialsProvider.logins = @{
-                                       @(AWSCognitoLoginProviderKeyFacebook) : token
+                                       @"graph.facebook.com" : token
                                        };
     }
 
@@ -62,6 +61,36 @@ RCT_EXPORT_METHOD(initCredentialsProvider: (NSString *)identityPoolId
     [AWSServiceManager defaultServiceManager].defaultServiceConfiguration =
     configuration;
 
+    return credentialsProvider;
+}
+
+
+
+
+RCT_EXPORT_METHOD(initCredentialsProvider: (NSString *)identityPoolIdInput
+                  : (NSString *)tokenInput
+                  : (NSString *)regionInput
+                  ) {
+
+    identityPoolId =identityPoolIdInput;
+    region = regionInput;
+    [self StartCognito: tokenInput];
+
+}
+
+RCT_EXPORT_METHOD(clearCognitoCredentialsProvider)
+{
+    AWSCognitoCredentialsProvider *credentialsProvider = [[[AWSCognito defaultCognito] configuration] credentialsProvider];
+    [credentialsProvider clearCredentials];
+    //[credentialsProvider clearKeychain];
+}
+
+RCT_EXPORT_METHOD(setVariables: (NSString *)identityPoolIdInput
+                  :(NSString *)regionInput
+                  )
+{
+    identityPoolId = identityPoolIdInput;
+    region = regionInput;
 }
 
 
@@ -69,16 +98,62 @@ RCT_REMAP_METHOD(getCognitoCredentials,
                  resolver:(RCTPromiseResolveBlock)resolve
                  rejecter:(RCTPromiseRejectBlock)reject)
 {
+    AWSCognitoCredentialsProvider *credentialsProvider = [[[AWSCognito defaultCognito] configuration] credentialsProvider];
+
+    NSString *token = [FBSDKAccessToken currentAccessToken].tokenString;
+    Boolean isAuthenticated = [token length] != 0;
+
+
+    if(credentialsProvider == nil){
+        [self StartCognito:token];
+        credentialsProvider = [[[AWSCognito defaultCognito] configuration] credentialsProvider];
+    }
+    else{
+       // if(isAuthenticated)
+
+            NSMutableDictionary *merge = [NSMutableDictionary dictionaryWithDictionary:credentialsProvider.logins];
+            NSString *currentToken = [merge valueForKey: @"graph.facebook.com"];
+
+
+
+
+        if([currentToken length] != 0 && !isAuthenticated){
+            //If User Logged Out from Facebook and Currently Logged In to Cognito
+            [merge removeObjectForKey:@"graph.facebook.com"];
+            [[AWSCognito defaultCognito] wipe];
+            [credentialsProvider clearKeychain];
+
+            //Re Initialize Credentials Provider so we get UnAuthenticated User Credentials
+            [self StartCognito:nil];
+            credentialsProvider = [[[AWSCognito defaultCognito] configuration] credentialsProvider];
+
+
+        }
+
+
+        else if( isAuthenticated && ([currentToken length] == 0 || ![currentToken isEqualToString: token])){
+            //Un Authenticated User Logged In or Token is Changed
+            [self StartCognito:token];
+            credentialsProvider = [[[AWSCognito defaultCognito] configuration] credentialsProvider];
+
+        }
+    }
 
     [[credentialsProvider refresh] continueWithBlock:^id(AWSTask *task) {
 
         if (task.error) {
+            NSString *errorType = [task.error.userInfo valueForKey: @"__type"];
+            if([errorType isEqualToString: @"NotAuthorizedException"]){
+                [[AWSCognito defaultCognito] wipe];
+                [credentialsProvider clearKeychain];
+            }
             NSLog(@"Error in Cognito credentialsprovider.refresh", task.error);
             reject(@"Error", @"Failed to get Cognito", task.error);
         }
         else {
             NSInteger timeStamp = round(credentialsProvider.expiration.timeIntervalSince1970);
-            resolve( @{@"accessKey": credentialsProvider.accessKey, @"secretKey": credentialsProvider.secretKey, @"sessionKey":credentialsProvider.sessionKey, @"expiration":[NSNumber numberWithInt:timeStamp], @"identityId":credentialsProvider.identityId });
+            resolve( @{@"accessKey": credentialsProvider.accessKey, @"secretKey": credentialsProvider.secretKey, @"sessionKey":credentialsProvider.sessionKey, @"expiration":[NSNumber numberWithInt:timeStamp],
+                       @"cognitoId":credentialsProvider.identityId, @"isAuthenticated":[NSNumber numberWithBool: isAuthenticated]});
         }
         return nil;
     }];
