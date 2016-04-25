@@ -11,7 +11,7 @@
 
 #import <AWSCognito/AWSCognito.h>
 #import <AWSCore/AWSCore.h>
-
+#import <AWSS3/AWSS3.h>
 typedef AWSRegionType (^CaseBlock)();
 
 @implementation RCTCognito
