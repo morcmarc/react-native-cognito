@@ -57,6 +57,7 @@ RCT_EXPORT_METHOD(initCredentialsProvider: (NSString *)identityPoolId
 
 RCT_REMAP_METHOD(UploadFileToS3,
                       : (NSString*) fileUrl
+                      : (NSString*) contentType
                       : (NSString*) bucket
                       : (NSString*) key
                  resolver:(RCTPromiseResolveBlock)resolve
@@ -68,6 +69,7 @@ RCT_REMAP_METHOD(UploadFileToS3,
     uploadRequest.key = key;
      NSURL *url = [NSURL URLWithString:fileUrl];
     uploadRequest.body = url;
+    uploadRequest.contentType = contentType;
     AWSS3TransferManager *transferManager = [AWSS3TransferManager defaultS3TransferManager];
     [[transferManager upload:uploadRequest] continueWithBlock:^id
                                                        (AWSTask *task) {
