@@ -154,3 +154,13 @@ You might have to add the following permission to your `AndroidManifest.xml`:
 ```xml
 <uses-permission android:name="android.permission.INTERNET" />
 ```
+
+## Contributors
+
+- [Sunny Gurnani](https://github.com/SunnyGurnani)
+
+## License
+
+This software is licensed under the MIT License.
+
+React and React Native are BSD licensed. Facebook also provide an additional patent grant.
